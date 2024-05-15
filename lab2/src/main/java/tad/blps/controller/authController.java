@@ -22,6 +22,7 @@ public class authController {
     public ResponseEntity signUp(@RequestBody @Valid
                                 AccountDTO request) {
         TokenDTO token = authenticationService.signUp(request);
+        
         if(token != null) return new ResponseEntity(HttpStatusCode.valueOf(200));
         else return new ResponseEntity(HttpStatusCode.valueOf(400));
     }

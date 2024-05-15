@@ -14,6 +14,9 @@ import tad.blps.services.UserService;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Set;
+import tad.blps.entity.Role;
+import tad.blps.entity.User;
 
 @RestController
 @RequestMapping("/file")
@@ -28,13 +31,12 @@ public class fileController {
         this.userService = userService;
     }
 
-    TokenDTO getToken(String BearerToken) {
-        String token = BearerToken.substring(7);
+    TokenDTO getToken(String BasicToken) {
+        String token = BasicToken.substring(6);
         return new TokenDTO(token);
     }
 
     @GetMapping(path = "/list")
-    @PreAuthorize("isAuthenticated()")
     @RolesAllowed({ "USER", "ADMIN"})
     @ResponseBody
     public List<File> getFiles(@RequestHeader("Authorization") String token,
@@ -43,24 +45,35 @@ public class fileController {
                                 @RequestParam(name = "filter_by", defaultValue = "None") String filter,
                                 @RequestParam(name = "value", defaultValue = "None") String value) {
         long userId = userService.getCurrentUser(getToken(token)).getId();
-        System.out.println(userId);
         return fileService.getFilesByFilter(userId, sort_by, order, filter, value);
     }
 
     @PostMapping(path = "/add")
     @PreAuthorize("isAuthenticated()")
-    @RolesAllowed("USER")
+    @RolesAllowed("{USER, ADMIN}")
     public ResponseEntity<?> addFile(@RequestBody FileDTO file,
                                      @RequestHeader("Authorization") String token)
                                             throws NullPointerException{
         try{
-            long userId = userService.getCurrentUser(getToken(token)).getId();
-            fileService.uploadFile(file, userId);
+            User user = userService.getCurrentUser(getToken(token));
+            Set<Role> roles = user.getRoles();
+            boolean isAdmin = false;
+            for (Role role : roles) {
+                if( "ADMIN".equals(role.getName())) {
+                    isAdmin = true;
+                    break;
+                }
+                
+            }
+            if(!isAdmin) {
+                if(fileService.isExecutable(file)) 
+                    return new ResponseEntity<>(HttpStatusCode.valueOf(415));
+            }
+            fileService.uploadFile(file, user.getId());
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @DeleteMapping(path = "/{idStr}")

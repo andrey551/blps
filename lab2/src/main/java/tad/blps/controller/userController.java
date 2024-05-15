@@ -11,10 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import tad.blps.DTO.AccountDTO;
+import org.springframework.web.bind.annotation.RequestParam;
 import tad.blps.DTO.TokenDTO;
 import tad.blps.entity.User;
 import tad.blps.services.UserService;
@@ -33,17 +32,14 @@ public class userController {
         this.userService = userService;
     }
     
-    @DeleteMapping
-    @PreAuthorize("isAuthenticated()")
-    @RolesAllowed("ADMIN")
-    public ResponseEntity<?> deleteUser(
-                            @RequestBody AccountDTO account,
+    @DeleteMapping("/del")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity deleteUser(
+                            @RequestParam String username,
                             @RequestHeader("Authorization") TokenDTO token) {
-        User userToDel = userService.getByUsernameAndPassword(
-                account.getUsername(), 
-                account.getPassword());
+        User userToDel = userService.getByUsername(username);
         userService.delete(userToDel);
-        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        return new ResponseEntity(HttpStatusCode.valueOf(200));
     }
     
 }

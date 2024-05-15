@@ -20,4 +20,14 @@ public class AccountDTO {
     @Size(min = 5, max = 50, message = "password in range [5, 50] characters")
     @NotBlank(message = "Password can't be null")
     private String password;
+    
+    @NotBlank(message = "Role can't be blank")
+    public String role;
+
+    public AccountDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+    
+
 }

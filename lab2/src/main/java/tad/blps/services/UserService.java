@@ -1,24 +1,34 @@
 package tad.blps.services;
 
+import bitronix.tm.BitronixTransactionManager;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.UserTransaction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tad.blps.DTO.AccountDTO;
 import tad.blps.DTO.TokenDTO;
+import tad.blps.SecurityDetail.UserDetailImpl;
 import tad.blps.entity.Payment;
 import tad.blps.entity.User;
 import tad.blps.repositories.PaymentRepository;
 import tad.blps.repositories.UserRepository;
-import tad.blps.utils.JwtUtil;
+import tad.blps.utils.BasicAuthUtil;
 
 @Service("UserService")
 @RequiredArgsConstructor
 public class UserService {
+//    @Autowired
+//    private BitronixTransactionManager userTransaction;
+    
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
-    private final JwtUtil jwtUtil = new JwtUtil();
-
+    
     @Transactional
     public void create(User user) {
         if(userRepository.existsByUsername(user.getUsername())) {
@@ -28,18 +38,50 @@ public class UserService {
         if(userRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email existed");
         }
-
-        userRepository.save(user);
+//        try {
+//            userTransaction.begin();
+            userRepository.save(user);
+            User user2 = getByUsername(user.getUsername());
+            Payment paymentToAdd = new Payment();
+            paymentToAdd.setUserId(user2.getId().intValue());
+            paymentRepository.save(paymentToAdd);
+//            userTransaction.commit();
+//        } catch ( Exception e) {
+//            try {
+//                userTransaction.rollback();
+//            } catch (IllegalStateException ex) {
+//                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (SecurityException ex) {
+//                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (javax.transaction.SystemException ex) {
+//                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
-    
     @Transactional
     public void delete(User user) {
-        userRepository.delete(user);
-        Payment payment = paymentRepository
-                .findByUserId(
-                        user.getId()
-                ).orElse(null);
-        paymentRepository.delete(payment);
+//        try {
+//            userTransaction.begin();
+            
+            userRepository.delete(user);
+            Payment payment = paymentRepository
+                    .findByUserId(
+                            user.getId()
+                    ).orElse(null);
+            paymentRepository.delete(payment);
+//            userTransaction.commit();
+//        } catch ( Exception e) {
+//            try {
+//                userTransaction.rollback();
+//            } catch (IllegalStateException ex) {
+//                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (SecurityException ex) {
+//                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (javax.transaction.SystemException ex) {
+//                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//           
+//        }
     }
     
     
@@ -58,18 +100,17 @@ public class UserService {
     }
 
     public UserDetailsService userDetailsService() {
-        return (UserDetailsService) this::getByUsername;
+        return username -> new UserDetailImpl( this.getByUsername(username));
     }
 
     public User getCurrentUser(TokenDTO token) {
-        if(jwtUtil.isExpired(token)) return null;
-        String username = jwtUtil.getUsername(token.getToken());
-        username = username.substring(1, username.length() - 1);
+        AccountDTO account = BasicAuthUtil.decode(token.getToken());
         try{
-            return getByUsername(username);
+            return getByUsernameAndPassword(
+                    account.getUsername(), 
+                    account.getPassword());
         } catch(Exception e) {
             return null;
         }
-
     }
 }

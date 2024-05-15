@@ -10,12 +10,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "userdb")
-public class User implements Serializable, Persistable<Long>, UserDetails {
+public class User implements Serializable, Persistable<Long> {
 
     @Column(name = "id")
     @Id
@@ -44,7 +46,7 @@ public class User implements Serializable, Persistable<Long>, UserDetails {
           name = "user_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(
           name = "role_id", referencedColumnName = "id")) 
-    private Collection<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -59,31 +61,6 @@ public class User implements Serializable, Persistable<Long>, UserDetails {
 
     @Override
     public boolean isNew() {
-        return false;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
         return false;
     }
 }

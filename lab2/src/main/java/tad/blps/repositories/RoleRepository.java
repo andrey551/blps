@@ -5,6 +5,7 @@
 package tad.blps.repositories;
 
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import tad.blps.entity.Role;
 
@@ -13,8 +14,6 @@ import tad.blps.entity.Role;
  * @author Never
  */
 @Repository
-public interface RoleRepository {
+public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByName(String name); 
-
-    public void save(Role role);
 }

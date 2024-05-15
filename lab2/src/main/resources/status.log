@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2024-05-11T10:38:35.558105600Z</date>
+  <millis>1715423915558</millis>
+  <nanos>105600</nanos>
+  <sequence>4</sequence>
+  <logger>tad.blps.services.FileService</logger>
+  <level>INFO</level>
+  <class>tad.blps.services.FileService</class>
+  <method>uploadFile</method>
+  <thread>42</thread>
+  <message>User with Id: 15 has use maximum amount of storage</message>
+</record>

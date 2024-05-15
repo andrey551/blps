@@ -4,7 +4,6 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tad.blps.DTO.PaymentDTO;
 import tad.blps.DTO.TokenDTO;
@@ -25,7 +24,6 @@ public class paymentController {
     }
 
     @PostMapping(path = "/update")
-    @PreAuthorize("isAuthenticated()")
     @RolesAllowed({"USER", "ADMIN"})
     public ResponseEntity<?> updatePayment(
             @RequestBody PaymentDTO paymentDTO,

@@ -55,7 +55,6 @@ public class File implements Serializable, Persistable<Long> {
     }
 
     public File(FileDTO file) {
-        new File();
         this.filename_source = file.getFilename();
         this.file_password = file.getFile_password();
         this.size = file.getSize();

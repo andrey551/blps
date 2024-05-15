@@ -1,5 +1,7 @@
 package tad.blps.services;
 
+import bitronix.tm.BitronixTransactionManager;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.data.domain.Sort;
@@ -13,30 +15,42 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Service
 public class FileService {
+//    We Can use transaction through @Transactional or 
+//    BitronixTransactionManamger, both of them are working fine
+    @Autowired
+    private BitronixTransactionManager userTransaction;
+    
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private FileRepository fileRepository;
+    private final FileRepository fileRepository;
 
-    private final int STORAGE_LIMIT = 1000000000;
+    private final int STORAGE_LIMIT = 100000;
 
     @Autowired
     public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
     }
-
+    
+    @Transactional
     public File getFileById(Long id) {
         return fileRepository.getById(id);
     }
-
+    
+    @Transactional
     public List<File> getFilesByUserId(Long userId) {
         Optional<List<File>> fileList = 
                 fileRepository.findByUserIdOrderBySizeAsc(userId);
         return fileList.orElse(null);
     }
-
+    
+    @Transactional
     public List<File> getFilesByUserIdAndSpecificSorting(
                                             Long userId, 
                                             String param, 
@@ -65,6 +79,7 @@ public class FileService {
 
     }
     
+    @Transactional
     public List<File> getFilesByFilter(
                                         Long userId, 
                                         String param, 
@@ -120,9 +135,6 @@ public class FileService {
         }
     }
 
-
-
-//    return status of file
     public void uploadFile(FileDTO file, Long userId)
                         throws NoSuchAlgorithmException {
         File fileToUpload = new File(file);
@@ -135,7 +147,32 @@ public class FileService {
                             .mapToLong(File::getSize)
                             .sum();
             if(totalSize > STORAGE_LIMIT) {
-                throw new OutOfMemoryError();
+                        FileHandler fileHandler = null;
+                try {
+                    fileHandler = new FileHandler("src/main/resources/status.log");
+                } catch (IOException ex) {
+                    Logger.getLogger(
+                            FileService
+                                    .class
+                                    .getName()).
+                            log(
+                                    Level.SEVERE, 
+                                    null, 
+                                    ex);
+                } catch (SecurityException ex) {
+                    Logger.getLogger(FileService
+                            .class
+                            .getName())
+                            .log(
+                                    Level.SEVERE, 
+                                    null, 
+                                    ex);
+                }
+                
+                logger.addHandler(fileHandler);
+                logger.log(Level.INFO, 
+                        "User with Id: {0} has use maximum amount of storage", 
+                        userId);
             }
         }
 
@@ -146,23 +183,58 @@ public class FileService {
                 generateDownloadUrl(file.getFilename())
         );
         fileToUpload.setUserId(userId);
-        fileRepository.save(fileToUpload);
+        
+        try {
+            userTransaction.begin();
+            
+            fileRepository.save(fileToUpload);
+            
+            userTransaction.commit();
+        } catch( Exception e) {
+            try {
+                userTransaction.rollback();
+            } catch (IllegalStateException ex) {
+                Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (javax.transaction.SystemException ex) {
+                Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          
+        }
+        
     }
-
-    @Transactional
+    
     public void updateFile(File file) {
         assert file.getId() != null;
         Long fileId = file.getId();
         Optional<File> existingFile = fileRepository.findById(fileId);
 
         if(existingFile.isPresent()) {
-            File fileToUpdate = existingFile.get();
+            try {
+                userTransaction.begin();
+                
+                File fileToUpdate = existingFile.get();
 
-            fileToUpdate.setFile_password(file.getFile_password());
-            fileToUpdate.setDownload_url(file.getDownload_url());
+                fileToUpdate.setFile_password(file.getFile_password());
+                fileToUpdate.setDownload_url(file.getDownload_url());
+                
+                userTransaction.commit();
+            } catch ( Exception e) {
+                try {
+                    userTransaction.rollback();
+                } catch (IllegalStateException ex) {
+                    Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SecurityException ex) {
+                    Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (javax.transaction.SystemException ex) {
+                    Logger.getLogger(FileService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
      }
-
+    
+    @Transactional
     public void deleteFile(String idStr, Long userId) {
         System.out.println(idStr + " " + userId);
         if(checkBelongToUser(idStr, userId)) {
@@ -176,14 +248,16 @@ public class FileService {
         }
 
     }
-
+    
+    @Transactional
     public boolean checkBelongToUser(String idStr, Long userId) {
         return Objects.equals(fileRepository
                 .findFileByIdstr(idStr)
                 .get()
                 .getUserId(), userId);
     }
-
+    
+    @Transactional
     public void incDownloadCount(Long id) {
         File file = getFileById(id);
         if(file != null ) {
@@ -205,9 +279,12 @@ public class FileService {
         return ret;
     }
 
-
     public Optional<List<File>> getUserFiles(long id) {
         return fileRepository.findByUserId(id);
+    }
+    
+    public boolean isExecutable(FileDTO file) {
+        return file.getFilename().endsWith(".exe");
     }
 
 
