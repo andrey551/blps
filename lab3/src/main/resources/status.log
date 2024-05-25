@@ -2,14 +2,14 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2024-05-11T10:38:35.558105600Z</date>
-  <millis>1715423915558</millis>
-  <nanos>105600</nanos>
-  <sequence>4</sequence>
-  <logger>tad.blps.services.FileService</logger>
+  <date>2024-05-25T08:26:00.240649800Z</date>
+  <millis>1716625560240</millis>
+  <nanos>649800</nanos>
+  <sequence>3</sequence>
+  <logger>tad.blps.scheduler.jobs.DeleteFileJob</logger>
   <level>INFO</level>
-  <class>tad.blps.services.FileService</class>
-  <method>uploadFile</method>
-  <thread>42</thread>
-  <message>User with Id: 15 has use maximum amount of storage</message>
+  <class>tad.blps.scheduler.jobs.DeleteFileJob</class>
+  <method>execute</method>
+  <thread>44</thread>
+  <message>File with Id: 6 has deleted automatically</message>
 </record>

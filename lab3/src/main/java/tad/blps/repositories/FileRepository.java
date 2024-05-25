@@ -13,7 +13,6 @@ public interface FileRepository
 
     Optional<List<File>> findByUserId(Long userId);
     Optional<List<File>> findByUserIdOrderBySizeAsc(Long userId);
-
     Optional<File> findFileByIdstr(String idStr);
 
     void deleteByIdstr(String idstr);

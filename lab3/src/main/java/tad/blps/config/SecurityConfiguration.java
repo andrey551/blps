@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/auth/*").permitAll()
                         .requestMatchers("/file/*", "/payment/*").permitAll()
                         .requestMatchers("/user/*").permitAll()
+                        .requestMatchers("/message/*").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())

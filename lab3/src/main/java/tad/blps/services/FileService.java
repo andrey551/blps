@@ -265,6 +265,16 @@ public class FileService {
             updateFile(file);
         }
     }
+    
+//    For schedule task
+    @Transactional 
+    public Long DelBySizemax() {
+        File fileToDel = fileRepository
+                .findAll(Sort.by(Sort.Direction.DESC, "size"))
+                .get(0);
+        fileRepository.deleteById(fileToDel.getId());
+        return fileToDel.getId();
+    }
 
     public String generateDownloadUrl(String fileName) {
         return "https:dfiles.eu/files/" + fileName;
