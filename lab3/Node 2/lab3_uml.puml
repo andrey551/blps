@@ -1,0 +1,539 @@
+@startuml
+annotation jakarta.annotation.security.RolesAllowed
+annotation jakarta.persistence.Entity
+annotation jakarta.persistence.GeneratedValue
+annotation jakarta.persistence.Id
+annotation jakarta.persistence.ManyToMany
+annotation jakarta.persistence.Table
+annotation jakarta.validation.Valid
+annotation jakarta.validation.constraints.Email
+annotation jakarta.validation.constraints.NotBlank
+annotation jakarta.validation.constraints.PositiveOrZero
+annotation jakarta.validation.constraints.Size
+annotation jakarta.ws.rs.ext.Provider
+annotation java.lang.Override
+annotation lombok.Data
+annotation lombok.Getter
+annotation lombok.NonNull
+annotation lombok.RequiredArgsConstructor
+annotation lombok.Setter
+annotation org.springframework.beans.factory.annotation.Autowired
+annotation org.springframework.boot.autoconfigure.SpringBootApplication
+annotation org.springframework.boot.autoconfigure.domain.EntityScan
+annotation org.springframework.context.annotation.Bean
+annotation org.springframework.context.annotation.Configuration
+annotation org.springframework.scheduling.annotation.EnableScheduling
+annotation org.springframework.security.access.prepost.PreAuthorize
+annotation org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+annotation org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+annotation org.springframework.stereotype.Component
+annotation org.springframework.stereotype.Controller
+annotation org.springframework.stereotype.Repository
+annotation org.springframework.stereotype.Service
+annotation org.springframework.transaction.annotation.EnableTransactionManagement
+annotation org.springframework.transaction.annotation.Transactional
+annotation org.springframework.web.bind.annotation.DeleteMapping
+annotation org.springframework.web.bind.annotation.GetMapping
+annotation org.springframework.web.bind.annotation.RequestHeader
+annotation org.springframework.web.bind.annotation.RequestMapping
+annotation org.springframework.web.bind.annotation.RequestParam
+annotation org.springframework.web.bind.annotation.RestController
+annotation tad.blps.controller.DeleteMapping
+annotation tad.blps.controller.GetMapping
+annotation tad.blps.controller.PathVariable
+annotation tad.blps.controller.PostMapping
+annotation tad.blps.controller.RequestBody
+annotation tad.blps.controller.RequestHeader
+annotation tad.blps.controller.RequestMapping
+annotation tad.blps.controller.RequestParam
+annotation tad.blps.controller.ResponseBody
+annotation tad.blps.controller.RestController
+annotation tad.blps.entity.Column
+annotation tad.blps.entity.Entity
+annotation tad.blps.entity.GeneratedValue
+annotation tad.blps.entity.Id
+annotation tad.blps.entity.JoinColumn
+annotation tad.blps.entity.JoinTable
+annotation tad.blps.entity.ManyToMany
+annotation tad.blps.entity.Table
+class bitronix.tm.BitronixTransactionManager
+class com.fasterxml.jackson.databind.ObjectMapper
+class com.rabbitmq.jms.admin.RMQConnectionFactory
+class com.rabbitmq.jms.admin.RMQDestination
+class jakarta.jms.Connection
+class jakarta.jms.ConnectionFactory
+class jakarta.jms.JMSException
+class jakarta.jms.Message
+class jakarta.jms.MessageConsumer
+class jakarta.jms.MessageProducer
+class jakarta.jms.Queue
+class jakarta.jms.Session
+class jakarta.jms.TextMessage
+class jakarta.persistence.EntityNotFoundException
+class jakarta.persistence.GenerationType
+class jakarta.servlet.FilterChain
+class jakarta.servlet.ServletException
+class jakarta.servlet.http.HttpServletRequest
+class jakarta.servlet.http.HttpServletResponse
+class jakarta.transaction.SystemException
+class jakarta.transaction.UserTransaction
+class jakarta.ws.rs.container.ContainerRequestContext
+class jakarta.ws.rs.container.ContainerResponseContext
+class java.io.IOException
+class java.security.NoSuchAlgorithmException
+class java.sql.Date
+class java.time.LocalDateTime
+class java.time.format.DateTimeFormatter
+class java.util.ArrayList
+class java.util.Collection
+class java.util.HashMap
+class java.util.HashSet
+class java.util.List
+class java.util.Map
+class java.util.Objects
+class java.util.Optional
+class java.util.Set
+class java.util.logging.FileHandler
+class java.util.logging.Level
+class java.util.logging.Logger
+class javax.naming.Context
+class javax.naming.InitialContext
+class javax.naming.NamingException
+class javax.transaction.SystemException
+class org.apache.commons.codec.binary.Base64
+class org.apache.commons.lang3.StringUtils
+class org.apache.qpid.jms.JmsConnectionFactory
+class org.quartz.CronScheduleBuilder
+class org.quartz.JobBuilder
+class org.quartz.JobDetail
+class org.quartz.JobExecutionContext
+class org.quartz.JobExecutionException
+class org.quartz.Scheduler
+class org.quartz.SchedulerException
+class org.quartz.SimpleScheduleBuilder
+class org.quartz.Trigger
+class org.quartz.TriggerBuilder
+class org.slf4j.Logger
+class org.slf4j.LoggerFactory
+class org.springframework.amqp.core.Binding
+class org.springframework.amqp.core.BindingBuilder
+class org.springframework.amqp.core.Queue
+class org.springframework.amqp.core.TopicExchange
+class org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
+class org.springframework.amqp.support.converter.MessageConverter
+class org.springframework.boot.SpringApplication
+class org.springframework.dao.PermissionDeniedDataAccessException
+class org.springframework.data.domain.Sort
+class org.springframework.http.HttpStatusCode
+class org.springframework.http.MediaType
+class org.springframework.http.ResponseEntity
+class org.springframework.scheduling.quartz.SchedulerFactoryBean
+class org.springframework.security.authentication.AuthenticationManager
+class org.springframework.security.authentication.AuthenticationProvider
+class org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+class org.springframework.security.authentication.dao.DaoAuthenticationProvider
+class org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+class org.springframework.security.config.annotation.web.builders.HttpSecurity
+class org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
+class org.springframework.security.config.http.SessionCreationPolicy
+class org.springframework.security.core.AuthenticationException
+class org.springframework.security.core.GrantedAuthority
+class org.springframework.security.core.authority.SimpleGrantedAuthority
+class org.springframework.security.core.context.SecurityContext
+class org.springframework.security.core.context.SecurityContextHolder
+class org.springframework.security.core.userdetails.UsernameNotFoundException
+class org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+class org.springframework.security.crypto.password.PasswordEncoder
+class org.springframework.security.web.SecurityFilterChain
+class org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+class org.springframework.security.web.authentication.WebAuthenticationDetailsSource
+class org.springframework.web.cors.CorsConfiguration
+class org.springframework.web.filter.OncePerRequestFilter
+class tad.blps.BlipsApplication
+class tad.blps.DTO.AccountDTO
+class tad.blps.DTO.FileDTO
+class tad.blps.DTO.PaymentDTO
+class tad.blps.DTO.TokenDTO
+class tad.blps.RabbitMQ.Receiver
+class tad.blps.RabbitMQ.Sender
+class tad.blps.SecurityDetail.UserDetailImpl
+class tad.blps.SecurityDetail.UserDetailServiceImpl
+class tad.blps.config.MQTTConfig
+class tad.blps.config.SecurityConfiguration
+class tad.blps.config.TransactionConfig
+class tad.blps.controller.authController
+class tad.blps.controller.fileController
+class tad.blps.controller.messgeController
+class tad.blps.controller.paymentController
+class tad.blps.controller.userController
+class tad.blps.entity.File
+class tad.blps.entity.Payment
+class tad.blps.entity.Role
+class tad.blps.entity.User
+class tad.blps.filters.CORSFilter
+class tad.blps.filters.JwtTokenAuthFilter
+class tad.blps.scheduler.JobContainer
+class tad.blps.scheduler.detail.DeleteFileDetail
+class tad.blps.scheduler.jobs.DeleteFileJob
+class tad.blps.scheduler.triggers.DeleteFileTrigger
+class tad.blps.services.AuthenticationService
+class tad.blps.services.FileService
+class tad.blps.services.PaymentService
+class tad.blps.services.RoleService
+class tad.blps.services.UserService
+class tad.blps.utils.AuthEntryPointJwt
+class tad.blps.utils.BasicAuthUtil
+tad.blps.BlipsApplication ..> org.springframework.boot.autoconfigure.SpringBootApplication
+tad.blps.BlipsApplication ..> org.springframework.boot.autoconfigure.domain.EntityScan
+tad.blps.BlipsApplication ..> org.springframework.scheduling.annotation.EnableScheduling
+tad.blps.BlipsApplication ..> org.springframework.transaction.annotation.EnableTransactionManagement
+tad.blps.BlipsApplication ..> org.springframework.boot.SpringApplication
+tad.blps.DTO.AccountDTO ..> jakarta.validation.constraints.Email
+tad.blps.DTO.AccountDTO ..> jakarta.validation.constraints.NotBlank
+tad.blps.DTO.AccountDTO ..> jakarta.validation.constraints.Size
+tad.blps.DTO.AccountDTO ..> lombok.Data
+tad.blps.DTO.FileDTO ..> lombok.Data
+tad.blps.DTO.PaymentDTO ..> jakarta.validation.constraints.NotBlank
+tad.blps.DTO.PaymentDTO ..> jakarta.validation.constraints.PositiveOrZero
+tad.blps.DTO.PaymentDTO ..> lombok.Data
+tad.blps.DTO.TokenDTO ..> lombok.Data
+tad.blps.RabbitMQ.Receiver ..> java.lang.Override
+tad.blps.RabbitMQ.Receiver ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.RabbitMQ.Receiver ..> org.springframework.context.annotation.Bean
+tad.blps.RabbitMQ.Receiver ..> org.springframework.stereotype.Component
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.Connection
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.ConnectionFactory
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.JMSException
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.Message
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.MessageConsumer
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.MessageProducer
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.Queue
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.Session
+tad.blps.RabbitMQ.Receiver ..> jakarta.jms.TextMessage
+tad.blps.RabbitMQ.Receiver ..> java.util.logging.Level
+tad.blps.RabbitMQ.Receiver ..> java.util.logging.Logger
+tad.blps.RabbitMQ.Receiver ..> javax.naming.Context
+tad.blps.RabbitMQ.Receiver ..> javax.naming.InitialContext
+tad.blps.RabbitMQ.Receiver ..> javax.naming.NamingException
+tad.blps.RabbitMQ.Receiver ..> org.apache.qpid.jms.JmsConnectionFactory
+tad.blps.RabbitMQ.Sender ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.RabbitMQ.Sender ..> org.springframework.stereotype.Component
+tad.blps.RabbitMQ.Sender ..> jakarta.jms.Connection
+tad.blps.RabbitMQ.Sender ..> jakarta.jms.JMSException
+tad.blps.RabbitMQ.Sender ..> jakarta.jms.Message
+tad.blps.RabbitMQ.Sender ..> jakarta.jms.MessageProducer
+tad.blps.RabbitMQ.Sender ..> jakarta.jms.Queue
+tad.blps.RabbitMQ.Sender ..> jakarta.jms.Session
+tad.blps.RabbitMQ.Sender ..> java.util.logging.Level
+tad.blps.RabbitMQ.Sender ..> java.util.logging.Logger
+tad.blps.SecurityDetail.UserDetailImpl ..> java.lang.Override
+tad.blps.SecurityDetail.UserDetailImpl ..> java.util.ArrayList
+tad.blps.SecurityDetail.UserDetailImpl ..> java.util.Collection
+tad.blps.SecurityDetail.UserDetailImpl ..> java.util.List
+tad.blps.SecurityDetail.UserDetailImpl ..> java.util.Set
+tad.blps.SecurityDetail.UserDetailImpl ..> org.springframework.security.core.GrantedAuthority
+tad.blps.SecurityDetail.UserDetailImpl ..> org.springframework.security.core.authority.SimpleGrantedAuthority
+tad.blps.SecurityDetail.UserDetailImpl ..> tad.blps.entity.Role
+tad.blps.SecurityDetail.UserDetailImpl ..> tad.blps.entity.User
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> java.lang.Override
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> org.springframework.stereotype.Service
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> org.springframework.transaction.annotation.Transactional
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> org.springframework.security.core.userdetails.UsernameNotFoundException
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> tad.blps.entity.Role
+tad.blps.SecurityDetail.UserDetailServiceImpl ..> tad.blps.entity.User
+tad.blps.config.MQTTConfig ..> org.springframework.context.annotation.Bean
+tad.blps.config.MQTTConfig ..> org.springframework.context.annotation.Configuration
+tad.blps.config.MQTTConfig ..> com.rabbitmq.jms.admin.RMQConnectionFactory
+tad.blps.config.MQTTConfig ..> com.rabbitmq.jms.admin.RMQDestination
+tad.blps.config.MQTTConfig ..> jakarta.jms.Connection
+tad.blps.config.MQTTConfig ..> jakarta.jms.ConnectionFactory
+tad.blps.config.MQTTConfig ..> jakarta.jms.JMSException
+tad.blps.config.MQTTConfig ..> jakarta.jms.MessageConsumer
+tad.blps.config.MQTTConfig ..> jakarta.jms.Session
+tad.blps.config.MQTTConfig ..> java.time.LocalDateTime
+tad.blps.config.MQTTConfig ..> java.time.format.DateTimeFormatter
+tad.blps.config.MQTTConfig ..> java.util.logging.Level
+tad.blps.config.MQTTConfig ..> java.util.logging.Logger
+tad.blps.config.MQTTConfig ..> org.springframework.amqp.core.Binding
+tad.blps.config.MQTTConfig ..> org.springframework.amqp.core.BindingBuilder
+tad.blps.config.MQTTConfig ..> org.springframework.amqp.core.Queue
+tad.blps.config.MQTTConfig ..> org.springframework.amqp.core.TopicExchange
+tad.blps.config.MQTTConfig ..> org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
+tad.blps.config.MQTTConfig ..> org.springframework.amqp.support.converter.MessageConverter
+tad.blps.config.MQTTConfig ..> tad.blps.RabbitMQ.Receiver
+tad.blps.config.SecurityConfiguration ..> lombok.RequiredArgsConstructor
+tad.blps.config.SecurityConfiguration ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.config.SecurityConfiguration ..> org.springframework.context.annotation.Bean
+tad.blps.config.SecurityConfiguration ..> org.springframework.context.annotation.Configuration
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+tad.blps.config.SecurityConfiguration ..> java.util.List
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.authentication.AuthenticationManager
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.authentication.AuthenticationProvider
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.authentication.dao.DaoAuthenticationProvider
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.config.annotation.web.builders.HttpSecurity
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.crypto.password.PasswordEncoder
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.web.SecurityFilterChain
+tad.blps.config.SecurityConfiguration ..> org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+tad.blps.config.SecurityConfiguration ..> org.springframework.web.cors.CorsConfiguration
+tad.blps.config.SecurityConfiguration ..> tad.blps.SecurityDetail.UserDetailServiceImpl
+tad.blps.config.SecurityConfiguration ..> tad.blps.filters.JwtTokenAuthFilter
+tad.blps.config.SecurityConfiguration ..> tad.blps.services.UserService
+tad.blps.config.TransactionConfig ..> org.springframework.context.annotation.Bean
+tad.blps.config.TransactionConfig ..> org.springframework.context.annotation.Configuration
+tad.blps.config.TransactionConfig ..> org.springframework.transaction.annotation.EnableTransactionManagement
+tad.blps.config.TransactionConfig ..> bitronix.tm.BitronixTransactionManager
+tad.blps.config.TransactionConfig ..> java.util.logging.Level
+tad.blps.config.TransactionConfig ..> java.util.logging.Logger
+tad.blps.config.TransactionConfig ..> javax.transaction.SystemException
+tad.blps.controller.authController ..> jakarta.validation.Valid
+tad.blps.controller.authController ..> tad.blps.controller.PostMapping
+tad.blps.controller.authController ..> tad.blps.controller.RequestBody
+tad.blps.controller.authController ..> tad.blps.controller.RequestMapping
+tad.blps.controller.authController ..> tad.blps.controller.ResponseBody
+tad.blps.controller.authController ..> tad.blps.controller.RestController
+tad.blps.controller.authController ..> org.springframework.http.HttpStatusCode
+tad.blps.controller.authController ..> org.springframework.http.ResponseEntity
+tad.blps.controller.authController ..> tad.blps.DTO.AccountDTO
+tad.blps.controller.authController ..> tad.blps.DTO.TokenDTO
+tad.blps.controller.authController ..> tad.blps.services.AuthenticationService
+tad.blps.controller.fileController ..> jakarta.annotation.security.RolesAllowed
+tad.blps.controller.fileController ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.controller.fileController ..> org.springframework.security.access.prepost.PreAuthorize
+tad.blps.controller.fileController ..> tad.blps.controller.DeleteMapping
+tad.blps.controller.fileController ..> tad.blps.controller.GetMapping
+tad.blps.controller.fileController ..> tad.blps.controller.PathVariable
+tad.blps.controller.fileController ..> tad.blps.controller.PostMapping
+tad.blps.controller.fileController ..> tad.blps.controller.RequestBody
+tad.blps.controller.fileController ..> tad.blps.controller.RequestHeader
+tad.blps.controller.fileController ..> tad.blps.controller.RequestMapping
+tad.blps.controller.fileController ..> tad.blps.controller.RequestParam
+tad.blps.controller.fileController ..> tad.blps.controller.ResponseBody
+tad.blps.controller.fileController ..> tad.blps.controller.RestController
+tad.blps.controller.fileController ..> java.security.NoSuchAlgorithmException
+tad.blps.controller.fileController ..> java.util.List
+tad.blps.controller.fileController ..> java.util.Set
+tad.blps.controller.fileController ..> org.springframework.http.HttpStatusCode
+tad.blps.controller.fileController ..> org.springframework.http.ResponseEntity
+tad.blps.controller.fileController ..> tad.blps.DTO.FileDTO
+tad.blps.controller.fileController ..> tad.blps.DTO.TokenDTO
+tad.blps.controller.fileController ..> tad.blps.entity.File
+tad.blps.controller.fileController ..> tad.blps.entity.Role
+tad.blps.controller.fileController ..> tad.blps.entity.User
+tad.blps.controller.fileController ..> tad.blps.services.FileService
+tad.blps.controller.fileController ..> tad.blps.services.UserService
+tad.blps.controller.messgeController ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.controller.messgeController ..> org.springframework.web.bind.annotation.GetMapping
+tad.blps.controller.messgeController ..> org.springframework.web.bind.annotation.RequestMapping
+tad.blps.controller.messgeController ..> org.springframework.web.bind.annotation.RequestParam
+tad.blps.controller.messgeController ..> org.springframework.web.bind.annotation.RestController
+tad.blps.controller.messgeController ..> java.util.logging.Level
+tad.blps.controller.messgeController ..> java.util.logging.Logger
+tad.blps.controller.messgeController ..> javax.naming.NamingException
+tad.blps.controller.messgeController ..> org.springframework.http.ResponseEntity
+tad.blps.controller.messgeController ..> tad.blps.RabbitMQ.Sender
+tad.blps.controller.paymentController ..> jakarta.annotation.security.RolesAllowed
+tad.blps.controller.paymentController ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.controller.paymentController ..> tad.blps.controller.PostMapping
+tad.blps.controller.paymentController ..> tad.blps.controller.RequestBody
+tad.blps.controller.paymentController ..> tad.blps.controller.RequestHeader
+tad.blps.controller.paymentController ..> tad.blps.controller.RequestMapping
+tad.blps.controller.paymentController ..> tad.blps.controller.RestController
+tad.blps.controller.paymentController ..> org.springframework.http.HttpStatusCode
+tad.blps.controller.paymentController ..> org.springframework.http.ResponseEntity
+tad.blps.controller.paymentController ..> tad.blps.DTO.PaymentDTO
+tad.blps.controller.paymentController ..> tad.blps.DTO.TokenDTO
+tad.blps.controller.paymentController ..> tad.blps.services.PaymentService
+tad.blps.controller.paymentController ..> tad.blps.services.UserService
+tad.blps.controller.userController ..> jakarta.annotation.security.RolesAllowed
+tad.blps.controller.userController ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.controller.userController ..> org.springframework.security.access.prepost.PreAuthorize
+tad.blps.controller.userController ..> org.springframework.stereotype.Controller
+tad.blps.controller.userController ..> org.springframework.web.bind.annotation.DeleteMapping
+tad.blps.controller.userController ..> org.springframework.web.bind.annotation.RequestHeader
+tad.blps.controller.userController ..> org.springframework.web.bind.annotation.RequestMapping
+tad.blps.controller.userController ..> org.springframework.web.bind.annotation.RequestParam
+tad.blps.controller.userController ..> org.springframework.http.HttpStatusCode
+tad.blps.controller.userController ..> org.springframework.http.ResponseEntity
+tad.blps.controller.userController ..> tad.blps.DTO.TokenDTO
+tad.blps.controller.userController ..> tad.blps.entity.User
+tad.blps.controller.userController ..> tad.blps.services.UserService
+tad.blps.entity.File ..> java.lang.Override
+tad.blps.entity.File ..> lombok.Getter
+tad.blps.entity.File ..> lombok.Setter
+tad.blps.entity.File ..> tad.blps.entity.Column
+tad.blps.entity.File ..> tad.blps.entity.Entity
+tad.blps.entity.File ..> tad.blps.entity.GeneratedValue
+tad.blps.entity.File ..> tad.blps.entity.Id
+tad.blps.entity.File ..> tad.blps.entity.Table
+tad.blps.entity.File ..> java.sql.Date
+tad.blps.entity.File ..> tad.blps.DTO.FileDTO
+tad.blps.entity.Payment ..> java.lang.Override
+tad.blps.entity.Payment ..> lombok.Getter
+tad.blps.entity.Payment ..> lombok.Setter
+tad.blps.entity.Payment ..> tad.blps.entity.Column
+tad.blps.entity.Payment ..> tad.blps.entity.Entity
+tad.blps.entity.Payment ..> tad.blps.entity.GeneratedValue
+tad.blps.entity.Payment ..> tad.blps.entity.Id
+tad.blps.entity.Payment ..> tad.blps.entity.Table
+tad.blps.entity.Role ..> jakarta.persistence.Entity
+tad.blps.entity.Role ..> jakarta.persistence.GeneratedValue
+tad.blps.entity.Role ..> jakarta.persistence.Id
+tad.blps.entity.Role ..> jakarta.persistence.ManyToMany
+tad.blps.entity.Role ..> jakarta.persistence.Table
+tad.blps.entity.Role ..> lombok.Getter
+tad.blps.entity.Role ..> lombok.Setter
+tad.blps.entity.Role ..> jakarta.persistence.GenerationType
+tad.blps.entity.Role ..> java.util.Collection
+tad.blps.entity.User ..> java.lang.Override
+tad.blps.entity.User ..> lombok.Getter
+tad.blps.entity.User ..> lombok.Setter
+tad.blps.entity.User ..> tad.blps.entity.Column
+tad.blps.entity.User ..> tad.blps.entity.Entity
+tad.blps.entity.User ..> tad.blps.entity.GeneratedValue
+tad.blps.entity.User ..> tad.blps.entity.Id
+tad.blps.entity.User ..> tad.blps.entity.JoinColumn
+tad.blps.entity.User ..> tad.blps.entity.JoinTable
+tad.blps.entity.User ..> tad.blps.entity.ManyToMany
+tad.blps.entity.User ..> tad.blps.entity.Table
+tad.blps.entity.User ..> java.sql.Date
+tad.blps.entity.User ..> java.util.Collection
+tad.blps.entity.User ..> java.util.HashSet
+tad.blps.entity.User ..> java.util.Set
+tad.blps.entity.User ..> org.springframework.security.core.GrantedAuthority
+tad.blps.filters.CORSFilter ..> jakarta.ws.rs.ext.Provider
+tad.blps.filters.CORSFilter ..> java.lang.Override
+tad.blps.filters.CORSFilter ..> jakarta.ws.rs.container.ContainerRequestContext
+tad.blps.filters.CORSFilter ..> jakarta.ws.rs.container.ContainerResponseContext
+tad.blps.filters.CORSFilter ..> java.io.IOException
+tad.blps.filters.JwtTokenAuthFilter ..> java.lang.Override
+tad.blps.filters.JwtTokenAuthFilter ..> lombok.NonNull
+tad.blps.filters.JwtTokenAuthFilter ..> lombok.RequiredArgsConstructor
+tad.blps.filters.JwtTokenAuthFilter ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.filters.JwtTokenAuthFilter ..> org.springframework.stereotype.Component
+tad.blps.filters.JwtTokenAuthFilter ..> jakarta.servlet.FilterChain
+tad.blps.filters.JwtTokenAuthFilter ..> jakarta.servlet.ServletException
+tad.blps.filters.JwtTokenAuthFilter ..> jakarta.servlet.http.HttpServletRequest
+tad.blps.filters.JwtTokenAuthFilter ..> jakarta.servlet.http.HttpServletResponse
+tad.blps.filters.JwtTokenAuthFilter ..> java.io.IOException
+tad.blps.filters.JwtTokenAuthFilter ..> org.apache.commons.lang3.StringUtils
+tad.blps.filters.JwtTokenAuthFilter ..> org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+tad.blps.filters.JwtTokenAuthFilter ..> org.springframework.security.core.context.SecurityContext
+tad.blps.filters.JwtTokenAuthFilter ..> org.springframework.security.core.context.SecurityContextHolder
+tad.blps.filters.JwtTokenAuthFilter ..> org.springframework.security.web.authentication.WebAuthenticationDetailsSource
+tad.blps.filters.JwtTokenAuthFilter ..> tad.blps.SecurityDetail.UserDetailServiceImpl
+tad.blps.filters.JwtTokenAuthFilter ..> tad.blps.services.UserService
+tad.blps.filters.JwtTokenAuthFilter ..> tad.blps.utils.BasicAuthUtil
+tad.blps.scheduler.JobContainer ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.scheduler.JobContainer ..> org.springframework.context.annotation.Bean
+tad.blps.scheduler.JobContainer ..> org.quartz.JobDetail
+tad.blps.scheduler.JobContainer ..> org.quartz.Scheduler
+tad.blps.scheduler.JobContainer ..> org.quartz.SchedulerException
+tad.blps.scheduler.JobContainer ..> org.quartz.Trigger
+tad.blps.scheduler.JobContainer ..> org.springframework.scheduling.quartz.SchedulerFactoryBean
+tad.blps.scheduler.detail.DeleteFileDetail ..> org.springframework.context.annotation.Bean
+tad.blps.scheduler.detail.DeleteFileDetail ..> org.springframework.context.annotation.Configuration
+tad.blps.scheduler.detail.DeleteFileDetail ..> org.quartz.JobBuilder
+tad.blps.scheduler.detail.DeleteFileDetail ..> org.quartz.JobDetail
+tad.blps.scheduler.detail.DeleteFileDetail ..> tad.blps.scheduler.jobs.DeleteFileJob
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.lang.Override
+tad.blps.scheduler.jobs.DeleteFileJob ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.scheduler.jobs.DeleteFileJob ..> org.springframework.stereotype.Component
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.io.IOException
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.time.LocalDateTime
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.time.format.DateTimeFormatter
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.util.logging.FileHandler
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.util.logging.Level
+tad.blps.scheduler.jobs.DeleteFileJob ..> java.util.logging.Logger
+tad.blps.scheduler.jobs.DeleteFileJob ..> org.quartz.JobExecutionContext
+tad.blps.scheduler.jobs.DeleteFileJob ..> org.quartz.JobExecutionException
+tad.blps.scheduler.jobs.DeleteFileJob ..> tad.blps.RabbitMQ.Sender
+tad.blps.scheduler.jobs.DeleteFileJob ..> tad.blps.services.FileService
+tad.blps.scheduler.triggers.DeleteFileTrigger ..> org.springframework.context.annotation.Bean
+tad.blps.scheduler.triggers.DeleteFileTrigger ..> org.springframework.context.annotation.Configuration
+tad.blps.scheduler.triggers.DeleteFileTrigger ..> org.quartz.JobDetail
+tad.blps.scheduler.triggers.DeleteFileTrigger ..> org.quartz.Trigger
+tad.blps.scheduler.triggers.DeleteFileTrigger ..> org.quartz.TriggerBuilder
+tad.blps.services.AuthenticationService ..> lombok.RequiredArgsConstructor
+tad.blps.services.AuthenticationService ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.services.AuthenticationService ..> org.springframework.stereotype.Service
+tad.blps.services.AuthenticationService ..> org.springframework.transaction.annotation.Transactional
+tad.blps.services.AuthenticationService ..> bitronix.tm.BitronixTransactionManager
+tad.blps.services.AuthenticationService ..> java.util.HashSet
+tad.blps.services.AuthenticationService ..> java.util.Set
+tad.blps.services.AuthenticationService ..> java.util.logging.Level
+tad.blps.services.AuthenticationService ..> java.util.logging.Logger
+tad.blps.services.AuthenticationService ..> tad.blps.DTO.AccountDTO
+tad.blps.services.AuthenticationService ..> tad.blps.DTO.TokenDTO
+tad.blps.services.AuthenticationService ..> tad.blps.entity.Role
+tad.blps.services.AuthenticationService ..> tad.blps.entity.User
+tad.blps.services.AuthenticationService ..> tad.blps.utils.BasicAuthUtil
+tad.blps.services.FileService ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.services.FileService ..> org.springframework.stereotype.Service
+tad.blps.services.FileService ..> org.springframework.transaction.annotation.Transactional
+tad.blps.services.FileService ..> bitronix.tm.BitronixTransactionManager
+tad.blps.services.FileService ..> java.io.IOException
+tad.blps.services.FileService ..> java.security.NoSuchAlgorithmException
+tad.blps.services.FileService ..> java.util.List
+tad.blps.services.FileService ..> java.util.Objects
+tad.blps.services.FileService ..> java.util.Optional
+tad.blps.services.FileService ..> java.util.logging.FileHandler
+tad.blps.services.FileService ..> java.util.logging.Level
+tad.blps.services.FileService ..> java.util.logging.Logger
+tad.blps.services.FileService ..> org.springframework.dao.PermissionDeniedDataAccessException
+tad.blps.services.FileService ..> org.springframework.data.domain.Sort
+tad.blps.services.FileService ..> tad.blps.DTO.FileDTO
+tad.blps.services.FileService ..> tad.blps.entity.File
+tad.blps.services.PaymentService ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.services.PaymentService ..> org.springframework.stereotype.Service
+tad.blps.services.PaymentService ..> org.springframework.transaction.annotation.Transactional
+tad.blps.services.PaymentService ..> bitronix.tm.BitronixTransactionManager
+tad.blps.services.PaymentService ..> jakarta.persistence.EntityNotFoundException
+tad.blps.services.PaymentService ..> jakarta.transaction.SystemException
+tad.blps.services.PaymentService ..> jakarta.transaction.UserTransaction
+tad.blps.services.PaymentService ..> java.util.Optional
+tad.blps.services.PaymentService ..> java.util.logging.Level
+tad.blps.services.PaymentService ..> java.util.logging.Logger
+tad.blps.services.PaymentService ..> tad.blps.DTO.PaymentDTO
+tad.blps.services.PaymentService ..> tad.blps.entity.Payment
+tad.blps.services.RoleService ..> lombok.RequiredArgsConstructor
+tad.blps.services.RoleService ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.services.RoleService ..> org.springframework.stereotype.Service
+tad.blps.services.RoleService ..> java.util.Set
+tad.blps.services.RoleService ..> tad.blps.entity.Role
+tad.blps.services.UserService ..> lombok.RequiredArgsConstructor
+tad.blps.services.UserService ..> org.springframework.beans.factory.annotation.Autowired
+tad.blps.services.UserService ..> org.springframework.stereotype.Service
+tad.blps.services.UserService ..> org.springframework.transaction.annotation.Transactional
+tad.blps.services.UserService ..> bitronix.tm.BitronixTransactionManager
+tad.blps.services.UserService ..> jakarta.transaction.SystemException
+tad.blps.services.UserService ..> jakarta.transaction.UserTransaction
+tad.blps.services.UserService ..> java.util.logging.Level
+tad.blps.services.UserService ..> java.util.logging.Logger
+tad.blps.services.UserService ..> org.springframework.security.core.userdetails.UsernameNotFoundException
+tad.blps.services.UserService ..> tad.blps.DTO.AccountDTO
+tad.blps.services.UserService ..> tad.blps.DTO.TokenDTO
+tad.blps.services.UserService ..> tad.blps.SecurityDetail.UserDetailImpl
+tad.blps.services.UserService ..> tad.blps.entity.Payment
+tad.blps.services.UserService ..> tad.blps.entity.User
+tad.blps.services.UserService ..> tad.blps.utils.BasicAuthUtil
+tad.blps.utils.AuthEntryPointJwt ..> java.lang.Override
+tad.blps.utils.AuthEntryPointJwt ..> org.springframework.stereotype.Component
+tad.blps.utils.AuthEntryPointJwt ..> com.fasterxml.jackson.databind.ObjectMapper
+tad.blps.utils.AuthEntryPointJwt ..> jakarta.servlet.ServletException
+tad.blps.utils.AuthEntryPointJwt ..> jakarta.servlet.http.HttpServletRequest
+tad.blps.utils.AuthEntryPointJwt ..> jakarta.servlet.http.HttpServletResponse
+tad.blps.utils.AuthEntryPointJwt ..> java.io.IOException
+tad.blps.utils.AuthEntryPointJwt ..> java.util.HashMap
+tad.blps.utils.AuthEntryPointJwt ..> java.util.Map
+tad.blps.utils.AuthEntryPointJwt ..> org.slf4j.Logger
+tad.blps.utils.AuthEntryPointJwt ..> org.slf4j.LoggerFactory
+tad.blps.utils.AuthEntryPointJwt ..> org.springframework.http.MediaType
+tad.blps.utils.AuthEntryPointJwt ..> org.springframework.security.core.AuthenticationException
+tad.blps.utils.BasicAuthUtil ..> org.apache.commons.codec.binary.Base64
+tad.blps.utils.BasicAuthUtil ..> tad.blps.DTO.AccountDTO
+@enduml

@@ -1,0 +1,6 @@
+cURL -X POST -d'{"username":"dau","email":"dau@gmail.com","password":"05052001"}' -H "Content-Type: application/json" localhost:8080/auth/signup
+cURL -X POST -d'{"username":"dau","password":"05052001"}' -H "Content-Type: application/json" localhost:8080/auth/login
+cURL -X POST -d'{"filename":"sx.sql","size":"1235"}' -H "Authorization: Bearer" localhost:8080/file/add
+cURL -X POST -d'{"filename":"ssx.sql","size":"12435"}' -H "Authorization: Bearer" localhost:8080/file/add
+cURL -X GET -H "Authorization: Bearer" localhost:8080/file/list
+cURL -X DELETE -H "Authorization: Bearer" localhost:8080/file/

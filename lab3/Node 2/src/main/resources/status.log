@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2024-05-26T22:26:00.233000300Z</date>
+  <millis>1716762360233</millis>
+  <nanos>300</nanos>
+  <sequence>3</sequence>
+  <logger>tad.blps.scheduler.jobs.DeleteFileJob</logger>
+  <level>INFO</level>
+  <class>tad.blps.scheduler.jobs.DeleteFileJob</class>
+  <method>execute</method>
+  <thread>44</thread>
+  <message>File with Id: 7 has deleted automatically</message>
+</record>
