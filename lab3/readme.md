@@ -1,6 +1,6 @@
 ## Description
 ### Node 1: 
-1. Is scheduled to check list files on Trash more than 1 day
+1. Is scheduled to check list files on Trash more than 1 day each 24 hours
 2. Send list to second node
 ### Node 2:
 1. Receive list from first node
