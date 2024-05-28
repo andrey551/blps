@@ -5,7 +5,7 @@
 ### Node 2:
 1. Receive list from first node
 2. Delete files
-3. Send email to user to notify 
+3. Send email to user to notify list file deleted (Users can receive only file deleted belong to them, multi user is supported)
 ------------------------
 ## List API 
 ### /auth
